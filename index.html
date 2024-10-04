@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/league.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <style>
+        .grid-area {
+            display: grid;
+            grid-auto-flow: column;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal pre {
+            width: 100%;
+        }
+
+        .inline-image img {
+            margin: 0;
+        }
+
+        .inline-image {
+            display: inline-flex;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-timing="60">
+            <h2>Functional Spring Boot</h2>
+        </section>
+        <section data-timing="30">
+            <h1>About Me</h1>
+            <aside class="notes">
+                You can also find me on the Chicago Tech and Kotlin slacks and the CJUG discord
+            </aside>
+            <h3>John Burns</h3>
+            <div class="grid-area">
+                <div style="text-align: left">
+                    <p>Sr. Staff Platform Engineer @ GrubHub</p>
+                    <p>CJUG/CKUG Co-Organizer</p>
+                    <p>ktlint-gradle Maintainer</p>
+                    <p class="inline-image">
+                        <img alt="github logo" src="github-logo.png" height="48" width="48"/>
+                        <span style="padding-left: .5em; padding-right: 2em;">wakingrufus</span>
+                    </p>
+                    <p class="inline-image"><img alt="fediverse logo" src="fediverse.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">@wakingrufus@bigshoulders.city</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section data-timing="30">
+            <img alt="GrubHub logo" src="gh-logo.png" height="194" width="688">
+            <aside class="notes">
+                We also implement what I am about to talk about
+            </aside>
+            <ul>
+                <li>Unlimited PTO</li>
+                <li>8-14 weeks of parental leave</li>
+                <li>4.5 day work week</li>
+            </ul>
+        </section>
+        <section data-timing="30">
+            <aside class="notes">
+                Sam
+            </aside>
+            <h2>In the Beginning...</h2>
+            <h1 class="fragment">XML</h1>
+        </section>
+        <section data-timing="15">
+            <h2>Resources</h2>
+            <aside class="notes">
+            </aside>
+            <p><a href="https://platformengineering.org/">platformengineering.org community hub + slack</a></p>
+            <p><a href=https://netflixtechblog.com/">Netflix TechBlog</a></p>
+            <p><a href="https://www.pluralsight.com/developer-success-lab">Developer Success Lab</a></p>
+        </section>
+        <section data-timing="15">
+            <h2>References</h2>
+            <aside class="notes">
+            </aside>
+            <p>
+                <a href="https://dev.to/jreock/developer-experience-is-dead-long-live-developer-experience-1col">Developer
+                    Experience is Dead: Long Live Developer Experience!</a> - Justin Reock
+            </p>
+            <p>
+                <a href="https://osf.io/preprints/psyarxiv/qz43x">Psychological Affordances Can Provide a Missing
+                    Explanatory Layer for Why Interventions to Improve Developer Experience Take Hold or Fail</a> - <a
+                    href="https://www.drcathicks.com/">Cat Hicks</a>
+            </p>
+            <p>
+                <a href="https://cloud.google.com/blog/products/devops-sre/announcing-dora-2021-accelerate-state-of-devops-report">DORA Metrics - five key metrics that indicate the performance of a software development team</a> - <a
+                    href="https://cloud.google.com/blog/products/devops-sre/the-2019-accelerate-state-of-devops-elite-performance-productivity-and-scaling">DORA team @ Google</a>
+            </p>
+            <p>
+                <a href="https://www.pluralsight.com/resource-center/guides/developer-thriving-white-paper">Developer Thriving Whitepaper</a>
+            </p>
+        </section>
+        <section data-timing="10">
+            <div class="grid-area">
+                <div style="text-align: left">
+                    <div><a href="https://wakingrufus.github.io/developer-experience-platform-engineering/">https://wakingrufus.github.io/developer-experience-platform-engineering/</a>
+                    </div>
+                    <p class="inline-image">
+                        <img alt="github logo" src="github-logo.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">wakingrufus</span>
+                    </p>
+                    <p class="inline-image"><img alt="fediverse logo" src="fediverse.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">@wakingrufus@bigshoulders.city</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+        defaultTiming: 60,
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
+</html>
