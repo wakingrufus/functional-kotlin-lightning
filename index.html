@@ -38,7 +38,7 @@
 <body>
 <div class="reveal">
     <div class="slides">
-        <section data-timing="60">
+        <section data-timing="15">
             <h2>Functional Spring Boot</h2>
         </section>
         <section data-timing="30">
@@ -51,7 +51,7 @@
                 <div style="text-align: left">
                     <p>Sr. Staff Platform Engineer @ GrubHub</p>
                     <p>CJUG/CKUG Co-Organizer</p>
-                    <p>ktlint-gradle Maintainer</p>
+                    <p>ktlint-gradle & spring-funk Maintainer</p>
                     <p class="inline-image">
                         <img alt="github logo" src="github-logo.png" height="48" width="48"/>
                         <span style="padding-left: .5em; padding-right: 2em;">wakingrufus</span>
@@ -73,7 +73,7 @@
                 <li>4.5 day work week</li>
             </ul>
         </section>
-        <section data-timing="30">
+        <section data-timing="15">
             <aside class="notes">
 
             </aside>
@@ -86,34 +86,209 @@
             </aside>
             <img alt="Spring XML" src="xml.png" height="372" width="628">
         </section>
+        <section data-timing="30">
+            <aside class="notes">
+
+            </aside>
+            <h2>Spring Boot</h2>
+            <pre class="java"><code data-trim data-noescape>
+@SpringBootApplication
+@EnableWebMvc
+public class MyApplication {
+}
+@Service
+public class MyBusinessLogic {
+    public String doSomething();
+}
+@RestController
+public class MyController {
+    private final MyBusinessLogic service;
+    @Autowired
+    public MyController(MyBusinessLogic service) {
+        this.service = service;
+    }
+    @GetMapping(path = "/ping")
+    public String get() {
+        return service.doSomething();
+    }
+}
+                </code></pre>
+        </section>
+        <section data-timing="60">
+            <h2>Spring Boot: The Good</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">No XML</li>
+                <li class="fragment">Wiring lives closer to code</li>
+                <li class="fragment">Less boilerplate</li>
+            </ul>
+        </section>
+        <section data-timing="180">
+            <h2>Spring Boot: The Bad</h2>
+            <aside class="notes">
+                learning curve: annotations are not discoverable with code completion
+                annotations aren't "click-through"
+                structure: component scan
+                performance: reflection
+            </aside>
+            <ul>
+                <li class="fragment">Learning Curve</li>
+                <li class="fragment">Structureless</li>
+                <li class="fragment">Performance</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="30">
+            <h2>Eliminate Component Scan</h2>
+            <aside class="notes">
+                decompose SpringBootApplication to turn off component scan
+            </aside>
+            <pre class="java"><code data-trim data-noescape>
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@EnableWebMvc
+public class MyApplication {
+}
+@Service
+public class MyBusinessLogic {
+    public String doSomething();
+}
+@RestController
+public class MyController {
+    private final MyBusinessLogic service;
+    @Autowired
+    public MyController(MyBusinessLogic service) {
+        this.service = service;
+    }
+    @GetMapping(path = "/ping")
+    public String get() {
+        return service.doSomething();
+    }
+}
+                </code></pre>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>Eliminate Component Scan</h2>
+            <aside class="notes">
+                decompose SpringBootApplication to turn off component scan
+                declare beans
+                this separates wiring from code in a good way
+            </aside>
+            <pre class="java"><code data-trim data-noescape>
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@EnableWebMvc
+public class MyApplication {
+    @Bean
+    MyBusinessLogic myBusinessLogic() {
+        return MyBusinessLogic();
+    }
+    @Bean
+    MyController myController(MyBusinessLogic myBusinessLogic) {
+        return MyController(myBusinessLogic);
+    }
+}
+public class MyBusinessLogic {
+    public String doSomething();
+}
+@RestController
+public class MyController {
+    private final MyBusinessLogic service;
+    public MyController(MyBusinessLogic service) {
+        this.service = service;
+    }
+    @GetMapping(path = "/ping")
+    public String get() {
+        return service.doSomething();
+    }
+}
+                </code></pre>
+        </section>
+        <section data-timing="30">
+            <h2>Remaining Issues</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">Still need AutoConfiguration</li>
+                <li class="fragment">Still using Annotations</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="180">
+            <h2>Functional Spring</h2>
+            <aside class="notes">
+            This is all built into spring
+            </aside>
+            <pre class="kotlin"><code data-trim data-noescape>
+val myRoutes(service: MyBusinessLogic) = router {
+    GET("/ping", service::doSomething)
+}
+val beans = beans {
+    bean&ltMyBusinessLogic>()
+    bean(::myRoutes)
+}
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@EnableWebMvc
+open class MyApplication {
+}
+class MyBusinessLogic {
+    public String doSomething();
+}
+class MyInitializer()
+  : ApplicationContextInitializer&ltGenericApplicationContext> {
+    override fun initialize(context: GenericApplicationContext) {
+        beans.initialize(context)
+    }
+}
+</code></pre>
+        </section>
+        <section data-timing="60">
+            <h2>Remaining Issues</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">Still need AutoConfiguration</li>
+                <li class="fragment">Not extensible</li>
+                <li class="fragment">Still some boilerplate to get started</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="360">
+            <h2>Spring Funk</h2>
+            <aside class="notes">
+                Continuation of Spring Fu
+            </aside>
+            <pre class="kotlin"><code data-trim data-noescape>
+open class MyApplication : SpringFunkApplication {
+    override fun dsl(): SpringDslContainer.() -> Unit = {
+        beans {
+            bean&ltMyBusinessLogic>()
+        }
+        webmvc {
+            enableWebMvc {
+                jetty()
+            }
+            routes {
+                router { service: MyBusinessLogic -> {
+                        GET("/ping", service::doSomething)
+                    }
+                }
+            }
+        }
+    }
+}
+class MyBusinessLogic {
+    public String doSomething();
+}
+</code></pre>
+        </section>
         <section data-timing="15">
             <h2>Resources</h2>
             <aside class="notes">
             </aside>
-            <p><a href="https://platformengineering.org/">platformengineering.org community hub + slack</a></p>
-            <p><a href=https://netflixtechblog.com/">Netflix TechBlog</a></p>
-            <p><a href="https://www.pluralsight.com/developer-success-lab">Developer Success Lab</a></p>
-        </section>
-        <section data-timing="15">
-            <h2>References</h2>
-            <aside class="notes">
-            </aside>
-            <p>
-                <a href="https://dev.to/jreock/developer-experience-is-dead-long-live-developer-experience-1col">Developer
-                    Experience is Dead: Long Live Developer Experience!</a> - Justin Reock
-            </p>
-            <p>
-                <a href="https://osf.io/preprints/psyarxiv/qz43x">Psychological Affordances Can Provide a Missing
-                    Explanatory Layer for Why Interventions to Improve Developer Experience Take Hold or Fail</a> - <a
-                    href="https://www.drcathicks.com/">Cat Hicks</a>
-            </p>
-            <p>
-                <a href="https://cloud.google.com/blog/products/devops-sre/announcing-dora-2021-accelerate-state-of-devops-report">DORA Metrics - five key metrics that indicate the performance of a software development team</a> - <a
-                    href="https://cloud.google.com/blog/products/devops-sre/the-2019-accelerate-state-of-devops-elite-performance-productivity-and-scaling">DORA team @ Google</a>
-            </p>
-            <p>
-                <a href="https://www.pluralsight.com/resource-center/guides/developer-thriving-white-paper">Developer Thriving Whitepaper</a>
-            </p>
+            <p><a href="https://docs.spring.io/spring-framework/reference/languages/kotlin/bean-definition-dsl.html">Spring Docs</a></p>
+            <p><a href="https://github.com/spring-projects-experimental/spring-fu">Spring Fu</a></p>
+            <p><a href="https://github.com/wakingrufus/spring-funk">Spring Funk</a></p>
+            <p><a href="https://www.infoq.com/presentations/spring-kotlin-functional/">Sébastien Deleuze Demo</a></p>
         </section>
         <section data-timing="10">
             <div class="grid-area">
