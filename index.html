@@ -86,7 +86,7 @@
             </aside>
             <img alt="Spring XML" src="xml.png" height="372" width="628">
         </section>
-        <section data-timing="30">
+        <section data-timing="15">
             <aside class="notes">
 
             </aside>
@@ -114,7 +114,7 @@ public class MyController {
 }
                 </code></pre>
         </section>
-        <section data-timing="60">
+        <section data-timing="45">
             <h2>Spring Boot: The Good</h2>
             <aside class="notes">
             </aside>
@@ -124,50 +124,21 @@ public class MyController {
                 <li class="fragment">Less boilerplate</li>
             </ul>
         </section>
-        <section data-timing="180">
+        <section data-timing="120">
             <h2>Spring Boot: The Bad</h2>
             <aside class="notes">
                 learning curve: annotations are not discoverable with code completion
                 annotations aren't "click-through"
-                structure: component scan
                 performance: reflection
+                structure: component scan (modulith)
             </aside>
             <ul>
                 <li class="fragment">Learning Curve</li>
-                <li class="fragment">Structureless</li>
                 <li class="fragment">Performance</li>
+                <li class="fragment">Structureless</li>
             </ul>
         </section>
-        <section data-auto-animate data-timing="30">
-            <h2>Eliminate Component Scan</h2>
-            <aside class="notes">
-                decompose SpringBootApplication to turn off component scan
-            </aside>
-            <pre class="java"><code data-trim data-noescape>
-@SpringBootConfiguration
-@EnableAutoConfiguration
-@EnableWebMvc
-public class MyApplication {
-}
-@Service
-public class MyBusinessLogic {
-    public String doSomething();
-}
-@RestController
-public class MyController {
-    private final MyBusinessLogic service;
-    @Autowired
-    public MyController(MyBusinessLogic service) {
-        this.service = service;
-    }
-    @GetMapping(path = "/ping")
-    public String get() {
-        return service.doSomething();
-    }
-}
-                </code></pre>
-        </section>
-        <section data-auto-animate data-timing="120">
+        <section data-auto-animate data-timing="90">
             <h2>Eliminate Component Scan</h2>
             <aside class="notes">
                 decompose SpringBootApplication to turn off component scan
@@ -211,9 +182,20 @@ public class MyController {
             <ul>
                 <li class="fragment">Still need AutoConfiguration</li>
                 <li class="fragment">Still using Annotations</li>
+                <li class="fragment">Boilerplate</li>
             </ul>
         </section>
-        <section data-auto-animate data-timing="180">
+        <section data-timing="120">
+            <h2>Spring Fu</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">Fast</li>
+                <li class="fragment">All-in</li>
+                <li class="fragment">Spring pivoted to hits for graalvm</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="120">
             <h2>Functional Spring</h2>
             <aside class="notes">
             This is all built into spring
@@ -242,7 +224,7 @@ class MyInitializer()
 }
 </code></pre>
         </section>
-        <section data-timing="60">
+        <section data-timing="30">
             <h2>Remaining Issues</h2>
             <aside class="notes">
             </aside>
@@ -252,7 +234,7 @@ class MyInitializer()
                 <li class="fragment">Still some boilerplate to get started</li>
             </ul>
         </section>
-        <section data-auto-animate data-timing="360">
+        <section data-auto-animate data-timing="240">
             <h2>Spring Funk</h2>
             <aside class="notes">
                 Continuation of Spring Fu
@@ -293,7 +275,7 @@ class MyBusinessLogic {
         <section data-timing="10">
             <div class="grid-area">
                 <div style="text-align: left">
-                    <div><a href="https://wakingrufus.github.io/developer-experience-platform-engineering/">https://wakingrufus.github.io/developer-experience-platform-engineering/</a>
+                    <div><a href="https://github.com/wakingrufus/functional-spring-boot-lightning">https://github.com/wakingrufus/functional-spring-boot-lightning</a>
                     </div>
                     <p class="inline-image">
                         <img alt="github logo" src="github-logo.png" height="48" width="48"/>
